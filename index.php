@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PHP math</title>
+    <title>PHP sandbox</title>
 </head>
 <body>
     <h1>Hello! Lets do some math.</h1>
@@ -24,7 +24,7 @@ $testM = 0;
 do {
     $testM++;
     if ($testM % 5 == 2){
-        echo "M = ", $testM;
+        echo "M = ", $testM, "<br />";
         break;
     }
 } while ($testM % 5 != 2);
