@@ -34,13 +34,37 @@ if(isset($_GET['submit1'])){
     </div>
 </form>
 </section>
+
 <?php
 if(isset($_GET['submit2'])){
-$s = (a+b+c) /2;
-// continue math formula here!!!
+    $a = $_GET["a"];
+    $b = $_GET["b"];
+    $c = $_GET["c"];
+$s = ($a+$b+$c) /2;
+$output = sqrt($s * ($s-$a) * ($s-$b) * ($s-$c));
+echo $output;
 }
-?>
 
+$zero = 0;
+function seriesSum($start, $stop, $step){
+    for($n = $start; $n <= $stop; $n += $step){
+        $zero += $n;
+    }
+    echo $zero;
+}
+
+function analyzeNumber($n){
+    if ($n<0){
+        echo "n is negative";
+    } elseif ($n==0){
+    echo "n is 0";
+    } else {
+        echo "n is positive";
+    }
+}
+
+
+?>
 <?php include('templates/footer.php'); ?>
 </body>
 </html>
