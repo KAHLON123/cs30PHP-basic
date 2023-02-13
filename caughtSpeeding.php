@@ -12,13 +12,13 @@
     <label>Enter the speed limit</label>
     <input type="number" name="limit"><br>
     <label>Enter driver 2 speed</label>
-    <input type="number" name="speed"><br>
+    <input type="number" name="speed2"><br>
     <label>Enter the speed limit</label>
-    <input type="number" name="limit"><br>
+    <input type="number" name="limit2"><br>
     <label>Enter driver 3 speed</label>
-    <input type="number" name="speed"><br>
+    <input type="number" name="speed3"><br>
     <label>Enter the speed limit</label>
-    <input type="number" name="limit"><br>
+    <input type="number" name="limit3"><br>
 <div>
     <input type="submit" name="submit" value="submit">
 </div><br>
@@ -26,24 +26,25 @@
 </section>
 <?php
 if (isset($_POST['submit'])){
-    determineTicket($_POST['driver'], $_POST['speed'], $_POST['limit']);
+    determineTicket(1, $_POST['speed'], $_POST['limit']);
+    determineTicket(2, $_POST['speed2'], $_POST['limit2']);
+    determineTicket(3, $_POST['speed3'], $_POST['limit3']);
 }
 
 function determineTicket($driverNum, $speed, $limit){
     $output = "";
-for (n=1;n<=3;n++){
+
         if ($speed > $limit += 40) {
         $output = "a really big ticket!";
-    } elseif ($speed > $limit+=20) {
+    } elseif ($speed > $limit += 20) {
         $output = "a big ticket...";
-    } elseif ($speed> $limit) {
+    } elseif ($speed > $limit) {
         $output = "a small ticket :(";
     } else {
         $output = "no ticket :)";
     }
     
-    echo "Driver ", $driverNum, " is going to get ", $output;
-}
+    echo "Driver ", $driverNum, " is going to get ", $output, "<br />";
 }
 ?>
 </body>
