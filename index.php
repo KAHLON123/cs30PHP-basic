@@ -44,26 +44,41 @@ $s = ($a+$b+$c) /2;
 $output = sqrt($s * ($s-$a) * ($s-$b) * ($s-$c));
 echo $output;
 }
-
-$zero = 0;
+?>
+<h4>Series sum</h4>
+<?php
 function seriesSum($start, $stop, $step){
     for($n = $start; $n <= $stop; $n += $step){
-        $zero += $n;
+        $sum = 0;
+        $sum += $n;
     }
-    echo $zero;
+    echo "The sum of that series is ", $sum, "<br />";
 }
-
+seriesSum(1, 10, 1);
+?>
+<h4>Analyze number</h4>
+<?php
 function analyzeNumber($n){
     if ($n<0){
-        echo "n is negative";
+        echo "n is negative <br />";
     } elseif ($n==0){
     echo "n is 0";
     } else {
-        echo "n is positive";
+        echo "n is positive <br />";
     }
 }
-
-
+analyzeNumber(5);
+?>
+<h4>Is even?</h4>
+<?php
+function isEven($n){
+    if ($n % 2 == 0){
+        echo "true";
+    } else {
+        echo "false";
+    }
+}
+isEven(8);
 ?>
 <?php include('templates/footer.php'); ?>
 </body>
