@@ -5,7 +5,6 @@
 <body>
 <section >
 <h1>Caught speeding!</h1>
-
 <form action="caughtSpeeding.php" method="POST">
     <label>Enter driver 1 speed</label>
     <input type="number" name="speed"><br>
@@ -30,20 +29,17 @@ if (isset($_POST['submit'])){
     determineTicket(2, $_POST['speed2'], $_POST['limit2']);
     determineTicket(3, $_POST['speed3'], $_POST['limit3']);
 }
-
 function determineTicket($driverNum, $speed, $limit){
     $output = "";
-
-        if ($speed > $limit += 40) {
+        if ($speed > $limit + 40) {
         $output = "a really big ticket!";
-    } elseif ($speed > $limit += 20) {
+    } elseif ($speed > $limit + 20) {
         $output = "a big ticket...";
     } elseif ($speed > $limit) {
         $output = "a small ticket :(";
     } else {
         $output = "no ticket :)";
     }
-    
     echo "Driver ", $driverNum, " is going to get ", $output, "<br />";
 }
 ?>
