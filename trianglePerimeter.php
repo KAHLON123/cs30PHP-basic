@@ -8,7 +8,7 @@
     Triangle Perimeter
 </h1>
 <h2>Enter the vertices of your triangle below</h2>
-<form action="caughtSpeeding.php" method="POST">
+<form action="trianglePerimeter.php" method="POST">
     <label>xa</label>
     <input type="number" name="xa"><br>
     <label>ya</label>
@@ -27,21 +27,20 @@
 </form>
 </section>
 <?php
-if (isset($_GET['submit'])){
-    define("AB", dist($_GET['xa'], $_GET['ya'], $_GET['xb'], $_GET['yb']));
-    define("AC", dist($_GET['xa'], $_GET['ya'], $_GET['xc'], $_GET['yc']));
-    define("BC", dist($_GET['xb'], $_GET['yb'], $_GET['xc'], $_GET['yc']));
-    echo display("AB", "AC", "BC");
+if (isset($_POST['submit'])){
+    $AB = dist($_POST['xa'], $_POST['ya'], $_POST['xb'], $_POST['yb']);
+    $AC = dist($_POST['xa'], $_POST['ya'], $_POST['xc'], $_POST['yc']);
+    $BC = dist($_POST['xb'], $_POST['yb'], $_POST['xc'], $_POST['yc']);
+    echo display($AB, $AC, $BC);
 }
-dist($x2, $y1, $x2, $y2){
-    echo "hi";
-    //return sqrt(($x2-$x1)**2+($y2-$y1)**2);
+function dist($x1, $y1, $x2, $y2){
+    return sqrt(($x2-$x1)**2+($y2-$y1)**2);
 }
-display($AB, $AC, $BC){
-    echo 'AB = ', $AB;
-    echo 'AC = ', $AC;
-    echo 'BC = ', $BC;
-    echo 'Perimeter = ', ($AB+$AC+$BC);
+function display($AB, $AC, $BC){
+    echo 'AB = ', $AB, '<br />';
+    echo 'AC = ', $AC, '<br />';
+    echo 'BC = ', $BC, '<br />';
+    echo 'Perimeter = ', $AB+$AC+$BC;
 }
 ?>
 </body>
