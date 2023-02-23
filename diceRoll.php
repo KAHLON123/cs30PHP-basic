@@ -21,7 +21,7 @@
     if(isset($_GET['submit'])){
         $selection = $_GET['s'];
         if($selection == "once"){
-            roll2Dice(1);
+            roll2Dice();
         } elseif ($selection == "5-times"){
             Roll(5);
         } elseif ($selection == "n-times"){
@@ -47,14 +47,17 @@
         echo " Sum: ", $dice1+$dice2;
     }
     function snakeEyes(){
-        $dice1 = rand(0, 6);
-        $dice2 = rand(0, 6);
-        $count = 1;
-        if ($dice1 == 1 && $dice2 == 1){
-            echo "SNAKE EYES! It took ", $count, " rolls to get snake eyes";
-        } else {
+        $count = 0;
+        $bool = True;
+        while ($bool){
+            $dice1 = rand(0, 6);
+            $dice2 = rand(0, 6);
             $count++;
-            echo $dice1, ", ", $dice2, " Sum: ", $dice1+$dice2;
+            echo $dice1, ", ", $dice2, " Sum: ", $dice1+$dice2, '<br />';
+            if ($dice1 == 1 && $dice2 == 1) {
+                echo "SNAKE EYES! It took ", $count, " roll(s) to get snake eyes";
+                break;
+            }
         }
     }
     ?>
