@@ -49,10 +49,11 @@
 <?php
 $nicknamesArr = file("nicknames.txt", NULL);
 //var_dump($nicknamesArr);
-
 var_dump($name);
 if (isset($_GET['submit'])){
     $selection = $_GET['s'];
+var_dump($_GET);
+
     if ($selection == "change"){
         changeName($_GET['first'], $_GET['last']);
     } elseif ($selection == "display-rand"){
@@ -70,7 +71,7 @@ if (isset($_GET['submit'])){
  }
 
 function changeName($first, $last){
-    $addToSql = "UPDATE user_name SET first=$first, last=$last";
+    $addToSql = "UPDATE user_name SET first= $first, last= $last";
     if (mysqli_query($conn, $addToSql)){
         echo "Name updated successfully";
     } else {
@@ -78,13 +79,16 @@ function changeName($first, $last){
     }
 }
 function displayRand(){
-    for ($n = 0; $n < $nicknames; $n++){
+    $temp = rand(1, count($nicknamesArr));
+    echo $nicknamesArr[$temp];
+}
+
+function displayAll(){
+    for ($n = 0; $n < count($nicknamesArr); $n++){
         echo $name[1], $nicknames[$n], $name[1], "<br />";
 
     }
-
 }
-
 mysqli_close($conn);
 ?>
 
