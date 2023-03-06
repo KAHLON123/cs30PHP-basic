@@ -8,7 +8,7 @@
     $conn = mysqli_connect('localhost', 'nicknameUser', 'localhost', 'nickname_gen');
 
     if (!$conn){
-        echo 'Connection error: ' . mysqli_connect_error();
+        echo 'Connection error: ' , mysqli_connect_error();
     }
 
     $sql = 'SELECT * FROM user_name';
@@ -27,7 +27,7 @@
         <input type="text" name="first"><br><br>
         <label>And your last name here</label><br>
         <input type="text" name="last">
-    </form><br>
+    <br>
     <label>OPTIONS:</label><br>
     <select name="s">
         <option value="change">Change Name</option>
@@ -39,7 +39,6 @@
     </select>
     <input type="submit" name="submit" value="submit">
     <h2>See your nicknames below:</h2>
-    <form>
         <input type="text" name="add-nick">
         <input type="text" name="remove-nick"><br />
         <label>ADD or REMOVE a nickname</label>
@@ -49,10 +48,10 @@
 <?php
 $nicknamesArr = file("nicknames.txt", NULL);
 //var_dump($nicknamesArr);
-var_dump($name);
+// var_dump($name);
 if (isset($_GET['submit'])){
     $selection = $_GET['s'];
-var_dump($_GET);
+// var_dump($_GET);
 
     if ($selection == "change"){
         changeName($_GET['first'], $_GET['last']);
@@ -68,28 +67,28 @@ var_dump($_GET);
 //     } elseif ($selection == "exit"){
         
 //     }
- }
+ } 
 
 function changeName($first, $last){
     $addToSql = "UPDATE user_name SET first= $first, last= $last";
     if (mysqli_query($conn, $addToSql)){
         echo "Name updated successfully";
     } else {
-        echo "Error updating name: " . mysqli_error($conn);
+        echo "Error updating name: " , mysqli_error($conn);
     }
 }
+
 function displayRand(){
-    $temp = rand(1, count($nicknamesArr));
-    echo $nicknamesArr[$temp];
+    $n = rand(1, count($nicknamesArr));
+    echo $nicknamesArr[$n];
 }
 
 function displayAll(){
     for ($n = 0; $n < count($nicknamesArr); $n++){
-        echo $name[1], $nicknames[$n], $name[1], "<br />";
-
+        //retrieve first/last name from sql
+        echo , $nicknames[$n], , "<br />";
     }
 }
-mysqli_close($conn);
 ?>
 
 </body>
