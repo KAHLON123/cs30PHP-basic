@@ -22,7 +22,7 @@
 <body>
 <section>
 <h1>Nickname Generator!</h1>
-    <form>
+    <form method="GET">
         <label>Put your first name here</label><br>
         <input type="text" name="first"><br><br>
         <label>And your last name here</label><br>
