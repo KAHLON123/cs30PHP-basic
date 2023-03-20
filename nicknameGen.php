@@ -4,8 +4,12 @@
 -->
 
 <?php
+    $servername="localhost";
+    $username="root";
+    $password="";
+    $dbname="nickname_gen";
 //  connect and check connection
-    $conn = mysqli_connect('localhost', 'nicknameUser', 'localhost', 'nickname_gen');
+    $conn = mysqli_connect($servername, $username, $password, $dbname);
 
     if (!$conn){
         echo 'Connection error: ' , mysqli_connect_error();
@@ -15,14 +19,15 @@
     $result = mysqli_query($conn, $sql);
     $name = mysqli_fetch_all($result, MYSQLI_ASSOC);
 ?>
+
 <!DOCTYPE html>
 <head>
-    <title>Student Grades</title>
+    <title>Nickname Generator</title>
 </head>
 <body>
 <section>
 <h1>Nickname Generator!</h1>
-    <form action="nicknameGen.php" method="GET">
+    <form action="nicknameGen.php" method="POST">
         <label>Put your first name here</label><br>
         <input type="text" name="first"><br><br>
         <label>And your last name here</label><br>
@@ -30,6 +35,7 @@
     <br>
     <label>OPTIONS:</label><br>
     <select name="s">
+        <option value="">Select An Option</option>
         <option value="change">Change Name</option>
         <option value="display-rand">Display a Random Nickname</option>
         <option value="display-all">Display All Nicknames</option>
@@ -39,39 +45,47 @@
     </select>
     <input type="submit" name="submit" value="submit">
     <h2>See your nicknames below:</h2>
-        <input type="text" name="add-nick">
-        <input type="text" name="remove-nick"><br />
+        <input type="text" name="nick"><br>
         <label>ADD or REMOVE a nickname</label>
     </form>
 </section>
 
 <?php
 $nicknamesArr = file("nicknames.txt", NULL);
+for ($n = 0; $n < count($nicknamesArr); $n++){
+    "INSERT INTO `user_name`(`id`, `nicknames`) VALUES ('[$n]','[$nicknamesArr[$n]]')";
+}
 //var_dump($nicknamesArr);
 // var_dump($name);
-if (isset($_GET['submit'])){
-    $selection = $_GET['s'];
-// var_dump($_GET);
-
-    if ($selection == "change"){
-        changeName($_GET['first'], $_GET['last']);
-    } elseif ($selection == "display-rand"){
-        displayRand();
+if (isset($_POST['submit'])){
+    $selection = $_POST['s'];
+    switch ($selection){
+        case "change":
+            changeName($_POST['first'], $_POST['last']);
+            break;
+        case "display-rand":
+            displayRand();
+            break;
+        case "display-all":
+            displayAll($_POST['first'], $_POST['last']);
+            break;
+        // case "add":
+        //     addNickname();
+        //     break;
+        // case "remove":
+        //     removeNickname();
+        case "exit":
+            echo "byebye!";
+            break;
+        default:
+            echo "Invalid option selected";
+            break;
     }
-//     } elseif ($selection == "display-all"){
-        
-//     } elseif ($selection == "add"){
-        
-//     } elseif ($selection == "remove"){
-        
-//     } elseif ($selection == "exit"){
-        
-//     }
- } 
+} 
 
 function changeName($first, $last){
-    $addToSql = "UPDATE user_name SET first= $first, last= $last";
-    if (mysqli_query($conn, $addToSql)){
+    $addToSql = "UPDATE user_name SET `first`= '[$first]', `last`= '[$last]' WHERE 1";
+    if (mysqli_query(mysqli_connect('localhost', 'nicknameUser', 'localhost', 'nickname_gen'), $addToSql)){
         echo "Name updated successfully";
     } else {
         echo "Error updating name: " , mysqli_error($conn);
@@ -83,10 +97,10 @@ function displayRand(){
     echo $nicknamesArr[$n];
 }
 
-function displayAll(){
+function displayAll($first, $last){
     for ($n = 0; $n < count($nicknamesArr); $n++){
         //retrieve first/last name from sql
-        echo , $nicknames[$n], , "<br />";
+        echo $first, $nicknames[$n], $last, "<br />";
     }
 }
 ?>
