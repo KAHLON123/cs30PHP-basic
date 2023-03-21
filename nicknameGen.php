@@ -1,25 +1,3 @@
-<!-- 
-    SQL FOR USERS NAME
-    TEXT FILE FOR NICKNAMES
--->
-
-<?php
-    $servername="localhost";
-    $username="root";
-    $password="";
-    $dbname="nickname_gen";
-//  connect and check connection
-    $conn = mysqli_connect($servername, $username, $password, $dbname);
-
-    if (!$conn){
-        echo 'Connection error: ' , mysqli_connect_error();
-    }
-
-    $sql = 'SELECT * FROM user_name';
-    $result = mysqli_query($conn, $sql);
-    $name = mysqli_fetch_all($result, MYSQLI_ASSOC);
-?>
-
 <!DOCTYPE html>
 <head>
     <title>Nickname Generator</title>
@@ -51,6 +29,22 @@
 </section>
 
 <?php
+$servername="localhost";
+$username="root";
+$password="";
+$dbname="nickname_gen";
+//  connect and check connection
+$conn = mysqli_connect($servername, $username, $password, $dbname);
+
+    if (!$conn){
+        echo 'Connection error: ' , mysqli_connect_error();
+    }
+
+$sql = 'SELECT * FROM user_name';
+$result = mysqli_query($conn, $sql);
+$name = mysqli_fetch_all($result, MYSQLI_ASSOC);
+var_dump($name);
+
 $nicknamesArr = file("nicknames.txt", NULL);
 for ($n = 0; $n < count($nicknamesArr); $n++){
     "INSERT INTO `user_name`(`id`, `nicknames`) VALUES ('[$n]','[$nicknamesArr[$n]]')";
@@ -84,8 +78,8 @@ if (isset($_POST['submit'])){
 } 
 
 function changeName($first, $last){
-    $addToSql = "UPDATE user_name SET `first`= '[$first]', `last`= '[$last]' WHERE 1";
-    if (mysqli_query(mysqli_connect('localhost', 'nicknameUser', 'localhost', 'nickname_gen'), $addToSql)){
+    $addToSql = "UPDATE user_name SET `first`= [$first], `last`= [$last] WHERE 1";
+    if (mysqli_query($conn, $addToSql)){
         echo "Name updated successfully";
     } else {
         echo "Error updating name: " , mysqli_error($conn);
