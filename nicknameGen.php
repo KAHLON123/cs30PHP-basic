@@ -34,34 +34,37 @@ $username="root";
 $password="";
 $dbname="nickname_gen";
 //  connect and check connection
-$conn = mysqli_connect($servername, $username, $password, $dbname);
+$conn = mysqli_connect($servername, $username, $password, $dbname); // why define $conn twice? otherwise shows as undefined in changename()
 
-    if (!$conn){
-        echo 'Connection error: ' , mysqli_connect_error();
-    }
+    // if (!$conn){
+    //     echo 'Connection error: ' , mysqli_connect_error();
+    // }
+    if (!$conn) {
+        die("Connection failed: " . mysqli_connect_error());
+      }
 
-$sql = 'SELECT * FROM user_name';
-$result = mysqli_query($conn, $sql);
-$name = mysqli_fetch_all($result, MYSQLI_ASSOC);
-var_dump($name);
+//$sql = 'SELECT * FROM user_name';
+//$result = mysqli_query($conn, $sql);
+//$name = mysqli_fetch_all($result, MYSQLI_ASSOC);
+//var_dump($name);
 
 $nicknamesArr = file("nicknames.txt", NULL);
-for ($n = 0; $n < count($nicknamesArr); $n++){
-    "INSERT INTO `user_name`(`id`, `nicknames`) VALUES ('[$n]','[$nicknamesArr[$n]]')";
-}
+
 //var_dump($nicknamesArr);
 // var_dump($name);
 if (isset($_POST['submit'])){
     $selection = $_POST['s'];
     switch ($selection){
         case "change":
+            echo "test 1";
             changeName($_POST['first'], $_POST['last']);
             break;
         case "display-rand":
             displayRand();
             break;
         case "display-all":
-            displayAll($_POST['first'], $_POST['last']);
+            displayAll($conn);
+            //displayAll($_POST['first'], $_POST['last']);
             break;
         // case "add":
         //     addNickname();
@@ -78,8 +81,13 @@ if (isset($_POST['submit'])){
 } 
 
 function changeName($first, $last){
-    $addToSql = "UPDATE user_name SET `first`= [$first], `last`= [$last] WHERE 1";
-    if (mysqli_query($conn, $addToSql)){
+    echo "test 2";
+    $addToSql = "UPDATE user_name SET first= '[${first}]', last= '[${last}]' WHERE 1";
+    $servername="localhost";
+    $username="root";
+    $password="";
+    $dbname="nickname_gen";
+    if ($conn){
         echo "Name updated successfully";
     } else {
         echo "Error updating name: " , mysqli_error($conn);
@@ -91,12 +99,23 @@ function displayRand(){
     echo $nicknamesArr[$n];
 }
 
-function displayAll($first, $last){
+function displayAll($){
     for ($n = 0; $n < count($nicknamesArr); $n++){
-        //retrieve first/last name from sql
-        echo $first, $nicknames[$n], $last, "<br />";
-    }
+        // retrieve first/last name from sql
+       echo $first, $nicknames[$n], $last, "<br />";
+   }
 }
+// function displayAll($conn) {
+//     $sql = "SELECT nick FROM nicknames";
+//     $result = mysqli_query($conn, $sql);
+//     if (mysqli_num_rows($result) > 0) {
+//         while ($row = mysqli_fetch_assoc($result)) {
+//             echo $row["nick"] . "<br>";
+//         }
+//     } else {
+//         echo "No nicknames found";
+//     }
+// }
 ?>
 
 </body>
