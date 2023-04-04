@@ -2,7 +2,8 @@
 <html lang="en">
 
 <body>
-<?php include('templates/header.php'); ?>
+<h1>Sort Algorithms</h1>
+<?php include('sort.php'); ?>
 
 <section class="container">
 
