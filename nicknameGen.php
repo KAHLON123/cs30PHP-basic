@@ -14,6 +14,7 @@
     <label>OPTIONS:</label><br>
     <select name="s">
         <option value="">Select An Option</option>
+        <option v>Add A name</option>
         <option value="change">Change Name</option>
         <option value="display-rand">Display a Random Nickname</option>
         <option value="display-all">Display All Nicknames</option>
@@ -34,7 +35,7 @@ $username="root";
 $password="";
 $dbname="nickname_gen";
 //  connect and check connection
-$conn = mysqli_connect($servername, $username, $password, $dbname); // why define $conn twice? otherwise shows as undefined in changename()
+$conn = mysqli_connect($servername, $username, $password, $dbname);
 
     // if (!$conn){
     //     echo 'Connection error: ' , mysqli_connect_error();
@@ -57,7 +58,11 @@ if (isset($_POST['submit'])){
     switch ($selection){
         case "change":
             echo "test 1";
-            changeName($_POST['first'], $_POST['last']);
+            //changeName($_POST['first'], $_POST['last'], $conn);
+            $first = $_POST["first"];
+            $last = $_POST["last"];
+            changeName($first, $last, $conn);
+                        echo "Nickname added: " ;
             break;
         case "display-rand":
             displayRand();
@@ -78,15 +83,11 @@ if (isset($_POST['submit'])){
             echo "Invalid option selected";
             break;
     }
-} 
+}
 
-function changeName($first, $last){
+function changeName($first, $last, $conn){
     echo "test 2";
-    $addToSql = "UPDATE user_name SET first= '[${first}]', last= '[${last}]' WHERE 1";
-    $servername="localhost";
-    $username="root";
-    $password="";
-    $dbname="nickname_gen";
+    $addToSql = "INSERT INTO `user_name`(`first`, `last`) VALUES ('[$first]','[$last]')";
     if ($conn){
         echo "Name updated successfully";
     } else {
@@ -99,7 +100,7 @@ function displayRand(){
     echo $nicknamesArr[$n];
 }
 
-function displayAll($){
+function displayAll(){
     for ($n = 0; $n < count($nicknamesArr); $n++){
         // retrieve first/last name from sql
        echo $first, $nicknames[$n], $last, "<br />";
