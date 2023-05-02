@@ -18,8 +18,9 @@ $words = ["dog","at", "good", "eye", "cat", "ball", "fish"];
 bubblesort($nums);
 bubblesort($words);
 function bubblesort($arr){
-    for ($i = 1; $i < count($arr);$i++ ) {
-        for ($n = 0; $n < count($arr) - 1; $n++) {
+    $count = count($arr);
+    for ($i = $count; $i > 1; $i-- ) {
+        for ($n = 0; $n < $i - 1; $n++) {
             if ($arr[$n] > $arr[$n + 1]) {
                 $hold = $arr[$n];
                 $arr[$n] = $arr[$n + 1];
